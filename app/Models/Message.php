@@ -17,7 +17,7 @@ class Message extends Model
     ];
 
     /**
-     * Get the user that owns the Message
+     * Add belongsTo relation for user
      *
      * @return BelongsTo
      */
