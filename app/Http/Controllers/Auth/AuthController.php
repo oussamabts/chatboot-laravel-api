@@ -9,6 +9,7 @@ use App\Http\Resources\Auth\LoginResource;
 use App\Http\Resources\Auth\RegisterResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -27,7 +28,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Login The User 
+     * Login The User
      *
      * @param LoginRequest $request
      * @return LoginResource
@@ -44,5 +45,15 @@ class AuthController extends Controller
         }
 
         return LoginResource::make($user);
+    }
+
+    /**
+     * Logout The User
+     *
+     * @return boolean
+     */
+    public function logout() : bool
+    {
+        return Auth::user()->token()->revoke();
     }
 }
