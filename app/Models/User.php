@@ -47,6 +47,11 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * Create New access token
+     *
+     * @return string
+     */
     public function accessToken() : string
     {
         return $this->createToken('accessToken')->accessToken;

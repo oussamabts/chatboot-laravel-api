@@ -13,14 +13,26 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function register(RegisterRequest $request)
+    /**
+     * Register New User
+     *
+     * @param RegisterRequest $request
+     * @return RegisterResource
+     */
+    public function register(RegisterRequest $request) : RegisterResource
     {
         return RegisterResource::make(
             User::create($request->validated())
         );
     }
 
-    public function login(LoginRequest $request)
+    /**
+     * Login The User 
+     *
+     * @param LoginRequest $request
+     * @return LoginResource
+     */
+    public function login(LoginRequest $request) : LoginResource
     {
         $validatedData = $request->validated();
 
