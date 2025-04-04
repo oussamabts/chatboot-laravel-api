@@ -8,64 +8,28 @@ use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\Auth\LoginResource;
 use App\Http\Resources\Auth\RegisterResource;
 use App\Http\Resources\CurrentAuthUserResource;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use App\Services\Constructors\AuthConstructor;
+use App\Services\Facades\AuthFacade;
 
-class AuthController extends Controller
+class AuthController extends Controller implements AuthConstructor
 {
-    /**
-     * Register New User
-     *
-     * @param RegisterRequest $request
-     * @return RegisterResource
-     */
-    public function register(RegisterRequest $request) : RegisterResource
+    public function register(RegisterRequest $request): RegisterResource
     {
-        return RegisterResource::make(
-            User::create($request->validated())
-        );
+        return AuthFacade::register($request);
     }
 
-    /**
-     * Login The User
-     *
-     * @param LoginRequest $request
-     * @return LoginResource
-     */
-    public function login(LoginRequest $request) : LoginResource
+    public function login(LoginRequest $request): LoginResource
     {
-        $validatedData = $request->validated();
-
-        $user = User::where("email" ,$validatedData["email"])->first();
-
-        if (!$user && !Hash::check($validatedData['password'], $user->password))
-        {
-            abort(401);
-        }
-
-        return LoginResource::make($user);
+        return AuthFacade::login($request);
     }
 
-    /**
-     * Get current authenticated user
-     *
-     * @return CurrentAuthUserResource
-     */
     public function currentAuthUser() : CurrentAuthUserResource
     {
-        $user = Auth::user();
-        return CurrentAuthUserResource::make($user);
+        return AuthFacade::currentAuthUser();
     }
 
-    /**
-     * Logout The User
-     *
-     * @return boolean
-     */
     public function logout() : bool
     {
-        return Auth::user()->token()->revoke();
+        return AuthFacade::logout();
     }
 }
