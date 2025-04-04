@@ -4,6 +4,12 @@ use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->prefix('auth')->group(function() {
+
+    /**
+     * Get current authenticated user
+     */
+    Route::get('current', [AuthController::class, 'currentAuthUser']);
+
     /**
      * Logout the user
      */
