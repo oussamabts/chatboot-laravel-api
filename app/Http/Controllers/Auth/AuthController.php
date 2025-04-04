@@ -48,7 +48,12 @@ class AuthController extends Controller
         return LoginResource::make($user);
     }
 
-    public function currentAuthUser()
+    /**
+     * Get current authenticated user
+     *
+     * @return CurrentAuthUserResource
+     */
+    public function currentAuthUser() : CurrentAuthUserResource
     {
         $user = Auth::user();
         return CurrentAuthUserResource::make($user);
