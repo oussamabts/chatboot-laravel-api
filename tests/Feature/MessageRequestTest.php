@@ -6,17 +6,16 @@ use App\Models\Message;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Laravel\Passport\Passport;
 use Tests\TestCase;
+use Tests\Traits\AuthTrait;
 
 class MessageRequestTest extends TestCase
 {
-    public function authenticate()
-    {
-        $user = User::factory()->create();
-        Passport::actingAs($user);
-        return $user;
-    }
+
+    /**
+     * Authenticate trait
+     */
+    use AuthTrait;
 
     /**
      * Refresh Database
@@ -42,7 +41,7 @@ class MessageRequestTest extends TestCase
         ];
 
         $response = $this->post('api/auth/messages', $request);
-
+        
         $response->assertStatus(201);
     }
 }
