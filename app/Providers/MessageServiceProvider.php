@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\Services\MessageService;
 use Illuminate\Support\ServiceProvider;
 
 class MessageServiceProvider extends ServiceProvider
@@ -11,7 +12,7 @@ class MessageServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind('MessageService', MessageService::class);
     }
 
     /**

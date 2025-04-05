@@ -18,6 +18,6 @@ class MessageController extends Controller implements MessageConstructor
      */
     public function store(MessageRequest $request): MessageResource
     {
-        return MessageFacade::sendMessage($request);
+        return MessageFacade::store($request);
     }
 }
