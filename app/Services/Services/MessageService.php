@@ -20,7 +20,7 @@ class MessageService implements MessageConstructor
     public function store(MessageRequest $request): MessageResource
     {
 
-        $response = Http::post('http://localhost:5000/nlp/asks', [
+        $response = Http::post('http://192.168.1.119:5000/nlp/asks', [
             'question' => $request->message,
         ]);
 
@@ -29,7 +29,7 @@ class MessageService implements MessageConstructor
                 $request->validated(),
                 [
                     'user_id' => Auth::user()->id,
-                    'response' => $response
+                    'response' => $response['answer']
                 ]
             ))
         );
