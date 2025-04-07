@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MessageRequest;
 use App\Http\Resources\MessageResource;
+use App\Models\Message;
 use App\Services\Constructors\MessageConstructor;
 use App\Services\Facades\MessageFacade;
 use Illuminate\Http\Request;
@@ -30,5 +31,16 @@ class MessageController extends Controller implements MessageConstructor
     public function store(MessageRequest $request): MessageResource
     {
         return MessageFacade::store($request);
+    }
+
+    /**
+     * Destroy a message
+     *
+     * @param Message $message
+     * @return boolean
+     */
+    public function destroy(Message $message) : bool
+    {
+        return MessageFacade::destroy($message);
     }
 }

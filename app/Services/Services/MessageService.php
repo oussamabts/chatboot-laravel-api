@@ -45,4 +45,15 @@ class MessageService implements MessageConstructor
             ))
         );
     }
+
+    /**
+     * destroy a message
+     *
+     * @param Message $message
+     * @return boolean
+     */
+    public function destroy(Message $message): bool
+    {
+        return Auth::user()->messages()->where('id', $message->id)->delete();
+    }
 }
