@@ -20,9 +20,7 @@ class MessageService implements MessageConstructor
     public function store(MessageRequest $request): MessageResource
     {
 
-        $response = Http::post('http://192.168.1.119:5000/nlp/asks', [
-            'question' => $request->message,
-        ]);
+        $response = $this->nlp($request);
 
         return MessageResource::make(
             Message::create(array_merge(
@@ -33,5 +31,12 @@ class MessageService implements MessageConstructor
                 ]
             ))
         );
+    }
+
+    private function nlp(MessageRequest $request)
+    {
+        return Http::post('http://192.168.1.119:5000/nlp/asks', [
+            'question' => $request->message,
+        ]);
     }
 }
