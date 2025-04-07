@@ -9,9 +9,16 @@ use Illuminate\Support\Facades\Http;
 use App\Models\Message;
 use App\Services\Services\Traits\MessageServiceTrait;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class MessageService implements MessageConstructor
 {
+    public function index(): AnonymousResourceCollection
+    {
+        return MessageResource::collection(
+            Message::where('user_id', Auth::user()->id)->get()
+        );
+    }
     /**
      * MessageService Trait
      */
