@@ -7,10 +7,16 @@ use App\Http\Resources\MessageResource;
 use App\Services\Constructors\MessageConstructor;
 use Illuminate\Support\Facades\Http;
 use App\Models\Message;
+use App\Services\Services\Traits\MessageServiceTrait;
 use Illuminate\Support\Facades\Auth;
 
 class MessageService implements MessageConstructor
 {
+    /**
+     * MessageService Trait
+     */
+    use MessageServiceTrait;
+
     /**
      * Send message
      *
@@ -31,12 +37,5 @@ class MessageService implements MessageConstructor
                 ]
             ))
         );
-    }
-
-    private function nlp(MessageRequest $request)
-    {
-        return Http::post('http://192.168.1.119:5000/nlp/asks', [
-            'question' => $request->message,
-        ]);
     }
 }
