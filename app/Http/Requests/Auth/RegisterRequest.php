@@ -22,9 +22,32 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "required|string|min:5",
-            "email" => "required|string|min:5|email|unique:users",
-            "password" => "required|string|min:8|confirmed"
+            "name" => "required|string|min:5|max:255",
+            "email" => "required|string|min:5|email|unique:users,email|max:255",
+            "password" => "required|string|min:8|confirmed|max:255"
+        ];
+    }
+
+    /**
+     * Get the custom validation messages.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.required' => 'Name is required',
+            'name.min' => 'Name must be at least 5 characters',
+            'name.max' => 'Name must not exceed 255 characters',
+            'email.required' => 'Email is required',
+            'email.min' => 'Email must be at least 5 characters',
+            'email.email' => 'Email must be a valid email address',
+            'email.max' => 'Email must not exceed 255 characters',
+            'email.unique' => 'Email is already taken',
+            'password.required' => 'Password is required',
+            'password.min' => 'Password must be at least 8 characters',
+            'password.max' => 'Password must not exceed 255 characters',
+            'password.confirmed' => 'Password confirmation does not match',
         ];
     }
 }
