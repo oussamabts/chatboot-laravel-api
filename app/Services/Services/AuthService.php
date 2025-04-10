@@ -39,9 +39,9 @@ class AuthService implements AuthConstructor
 
         $user = User::where("email" ,$validatedData["email"])->first();
 
-        if (!$user && !Hash::check($validatedData['password'], $user->password))
+        if (!$user || !Hash::check($validatedData['password'], $user->password))
         {
-            abort(401);
+            abort(401, "Incorrect email or password");
         }
 
         return LoginResource::make($user);
